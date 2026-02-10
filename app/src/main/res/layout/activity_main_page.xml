@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/bg_login_gradient"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/main_page_welcome"
+            android:text="@string/main_page_welcome"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+            <Button
+                android:id="@+id/btnTerminalManager"
+                android:text="Terminal Manager SDK"
+                android:textStyle="bold"
+                android:background="@drawable/button_selector"
+                android:textColor="@drawable/button_text_selector"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btnComponentManager"
+                android:text="Component SDK"
+                android:textStyle="bold"
+                android:background="@drawable/button_selector"
+                android:textColor="@drawable/button_text_selector"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btnFinancialManager"
+                android:text="Financial SDK"
+                android:textStyle="bold"
+                android:background="@drawable/button_selector"
+                android:textColor="@drawable/button_text_selector"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btnCustomerApiManager"
+                android:text="Customer API"
+                android:textStyle="bold"
+                android:background="@drawable/button_selector"
+                android:textColor="@drawable/button_text_selector"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

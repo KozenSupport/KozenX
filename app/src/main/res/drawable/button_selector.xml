@@ -1,0 +1,24 @@
+<!-- res/drawable/button_selector.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 按下状态 -->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="8dp" />
+            <solid android:color="#388E3C" />  <!-- 深绿色 -->
+            <stroke
+                android:width="1dp"
+                android:color="#2E7D32" />
+        </shape>
+    </item>
+
+    <!-- 正常状态 -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="8dp" />
+            <solid android:color="#4CAF50" />  <!-- 绿色 -->
+            <stroke
+                android:width="1dp"
+                android:color="#388E3C" />
+        </shape>
+    </item>
+</selector>

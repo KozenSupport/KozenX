@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/bg_login_gradient"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Customer API version: 2.1.6-release"
+            />
+
+        <Button
+            android:id="@+id/btnShowIntegrateModal"
+            android:text="How to integrate"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+<!--        <Button-->
+<!--            android:id="@+id/btnGetConnectTypeByEth"-->
+<!--            android:text="Get Connection Type"-->
+<!--            android:background="@drawable/button_selector"-->
+<!--            android:textColor="@drawable/button_text_selector"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content" />-->
+        <TextView
+            android:id="@+id/btnGetConnectTypeByEth"
+            android:text="Get Connection Type"
+            android:textSize="20dp"
+            android:textColor="@android:color/holo_blue_dark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp" />
+
+        <Button
+            android:id="@+id/btnStartLogging"
+            android:text="Start Logging"
+            android:background="@drawable/button_selector"
+            android:textColor="@drawable/button_text_selector"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnStopLogging"
+            android:text="Stop Logging"
+            android:background="@drawable/button_selector"
+            android:textColor="@drawable/button_text_selector"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnExportAllLogs"
+            android:text="Export All Logs"
+            android:background="@drawable/button_selector"
+            android:textColor="@drawable/button_text_selector"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnEnableChargeLimit"
+            android:text="Enable Charge Limit"
+            android:background="@drawable/button_selector"
+            android:textColor="@drawable/button_text_selector"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnDisableChargeLimit"
+            android:text="Disable Charge Limit"
+            android:background="@drawable/button_selector"
+            android:textColor="@drawable/button_text_selector"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnGetChargeLimit"
+            android:text="Get Charge Limit"
+            android:background="@drawable/button_selector"
+            android:textColor="@drawable/button_text_selector"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnUpdateTPFw"
+            android:text="Update TP Fw"
+            android:background="@drawable/button_selector"
+            android:textColor="@drawable/button_text_selector"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <Button
+            android:id="@+id/btnShowTestUpdateFWModal"
+            android:text="System Update"
+            android:background="@drawable/button_selector"
+            android:textColor="@drawable/button_text_selector"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</ScrollView >

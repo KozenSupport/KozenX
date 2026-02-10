@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:windowSoftInputMode="adjustPan"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Detect GPS -->
+        <TextView
+            android:id="@+id/textNativeInterfaceTest"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="Native Interface Test"
+            />
+
+        <Button
+            android:id="@+id/btnDetectGPS"
+            android:text="Detect GPS"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"/>
+
+        <!-- CheckGpsStatus -->
+        <Button
+            android:id="@+id/btnGpsStatus"
+            android:text="Check Gps Status"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"/>
+
+        <!-- btnScreenPower -->
+        <Button
+            android:id="@+id/btnScreenPower"
+            android:text="Screen Power"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"/>
+
+        <!-- btnScreenTimeout -->
+        <Button
+            android:id="@+id/btnScreenTimeout"
+            android:text="Screen Time Out Value"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"/>
+
+        <!-- btnSetScreenTimeout -->
+        <Button
+            android:id="@+id/btnSetScreenTimeout"
+            android:text="Set Screen Time Out"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"/>
+
+        <!-- btnTrackGpsLocation -->
+        <Button
+            android:id="@+id/btnTrackGpsLocation"
+            android:text="Track Gps Location"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"/>
+
+        <!-- btnStopTrackGpsLocation -->
+        <Button
+            android:id="@+id/btnStopTrackGpsLocation"
+            android:text="Stop Track Gps"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"/>
+
+        <!-- btnDetectBluetooth  -->
+        <Button
+            android:id="@+id/btnDetectBluetooth"
+            android:text="Detect Blue tooth"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"/>
+
+        <!-- btnDetectFlashlight  -->
+        <Button
+            android:id="@+id/btnDetectFlashlight"
+            android:text="Detect Flash light"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"/>
+
+        <!-- btnCheckFlashlightStatus  -->
+        <Button
+            android:id="@+id/btnCheckFlashlightStatus"
+            android:text="Check Flash light Status"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"/>
+
+        <!-- btnCheckAirPlaneStatus  -->
+        <Button
+            android:id="@+id/btnCheckAirPlaneStatus"
+            android:text="Check Airplane Status"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"/>
+
+        <!-- btnSwitchAirplane  -->
+        <Button
+            android:id="@+id/btnSwitchAirplane"
+            android:text="Switch Airplane Status"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"/>
+
+        <!-- Get the number of slots in the device, and their type (e.g., physical, eSIM)  -->
+        <Button
+            android:id="@+id/btnGetSlotNumbers"
+            android:text="Get Slot Numbers"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"/>
+
+        <!-- Get the ICCID number for a SIM slot  -->
+        <Button
+            android:id="@+id/btnGetSIM_ICCID"
+            android:text="Get SIM Slot ICCID"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"/>
+
+        <!-- Get the eSIM EID number -->
+        <Button
+            android:id="@+id/btnGetEsimEid"
+            android:text="Get Esim eid"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"/>
+
+        <!-- Switch a specified SIM slot on or off -->
+        <Button
+            android:id="@+id/btwSwitchSIMSlot"
+            android:text="Switch SIM Slot"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"/>
+
+        <!-- Set a specified SIM slot as the active data SIM -->
+        <Button
+            android:id="@+id/btnSetActiveDataSim"
+            android:text="Set Active Data Sim"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"/>
+
+        <!-- Get the list of APNs for a SIM slot -->
+        <Button
+            android:id="@+id/btwApnsForSimSlot"
+            android:text="Get SIM SLOT APN List"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"/>
+
+        <!-- Get the active APN for a SIM slot -->
+        <Button
+            android:id="@+id/btnGetActiveAPNForSimSlot"
+            android:text="Active APN for sim slot"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"/>
+
+        <!-- Get the mobile data usage stats for all apps on the device -->
+        <Button
+            android:id="@+id/btwGetDataUsageOfApps"
+            android:text="Apps Data Usage"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"/>
+
+        <!-- Get the list of apps installed on the device -->
+        <Button
+            android:id="@+id/btnGetInstalledApps"
+            android:text="Install App List"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"/>
+
+        <!-- Export Logs Button -->
+        <Button
+            android:id="@+id/btnInstallModeControl"
+            android:text="Test Install APP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="200dp"/>
+    </LinearLayout>
+</ScrollView>

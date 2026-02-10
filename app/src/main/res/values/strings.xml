@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Kozen X</string>
+    <string name="login_account_placeholder">Email</string>
+    <string name="login_psd_placeholder">Password</string>
+    <string name="login_btn_login">Login</string>
+    <string name="login_link_forgetPsd">Forget Password?</string>
+    <string name="login_app_description">⚠️Please note that this is a non-public tool app, intended for internal use by the Kozen FAE only.</string>
+
+    <string name="logo_description">Kozen Logo</string>
+    <string name="login_app_config_account">📚 Demo account: henry@demo.com</string>
+    <string name="login_app_config_psd">📚 Demo password: Abc12345</string>
+
+
+    <string name="main_page_welcome">Kozen SDK Test Center</string>
+    <string name="login_link_register">Register New?</string>
+
+    <string name="register_title">Register</string>
+    <string name="register_username_hint">Email Address</string>
+    <string name="register_password_hint">Password</string>
+    <string name="register_confirm_password_hint">Confirm Password</string>
+    <string name="register_btn_submit">Register</string>
+    <string name="register_btn_back_to_login">Back To Login</string>
+    <string name="register_success">Register Success</string>
+    <string name="register_failed">Register Failed</string>
+    <string name="register_password_not_match">The two passwords did not match.</string>
+    <string name="register_username_empty">ops! account can not be empty!</string>
+    <string name="register_password_empty">ops! password can not be empty!</string>
+    <string name="register_confirm_password_empty">Please confirm your password</string>
+    <string name="register_username_exists">This email address is already associated with an account.</string>
+    <string name="register_min_password_length">Password length must be at least 8 characters</string>
+    <string name="register_username_format_error">Invalid email format</string>
+</resources>
