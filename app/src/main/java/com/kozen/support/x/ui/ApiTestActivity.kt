@@ -5,18 +5,19 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.kozen.support.x.R
+import com.kozen.support.x.utils.SdkManager
 import java.lang.reflect.Method
 
-class MdmTestActivity : AppCompatActivity() {
+class ApiTestActivity : AppCompatActivity() {
     private lateinit var currentMethod: Method
     private val editTexts = mutableListOf<EditText>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.mdm_activity_test)
+        setContentView(R.layout.api_test_activity)
 
         val methodName = intent.getStringExtra("METHOD_NAME")
-        currentMethod = MdmSDKManager.getAllApiMethods().find { it.name == methodName } ?: return
+        currentMethod = SdkManager.getAllApiMethods().find { it.name == methodName } ?: return
 
         initView()
     }

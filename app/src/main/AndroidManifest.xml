@@ -20,23 +20,7 @@
         android:label="Kozen X"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
         <activity
-            android:name=".ui.TestCenterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.MainPage"
-            android:exported="false" />
-        <activity
-            android:name=".ui.CustomerApiManagerActivity"
-            android:exported="false" >
-        </activity>
-        <activity
-            android:name=".ui.TerminalManagerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.ComponentManagerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.FinancialManagerActivity"
+            android:name=".ui.SdkMenuActivity"
             android:exported="false" />
         <activity
             android:name=".ui.RegisterActivity"
@@ -51,10 +35,10 @@
 
         </activity>
         <activity
-            android:name=".ui.MdmMainActivity"
+            android:name=".ui.ApiListActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.MdmTestActivity"
+            android:name=".ui.ApiTestActivity"
             android:exported="false" />
 
     </application>

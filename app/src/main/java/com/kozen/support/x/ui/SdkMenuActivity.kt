@@ -5,16 +5,18 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.kozen.support.x.R
+import com.kozen.support.x.config.SdkTypeConstants
 
 /**
  * 主页
  */
-class MainPage: AppCompatActivity(){
-
+class SdkMenuActivity: AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_page)
+        setContentView(R.layout.sdk_menu_activity)
+
+        val intentMain = Intent(this, ApiListActivity::class.java)
 
         val btnTerminalManagerSDK: Button = findViewById(R.id.btnTerminalManager)
         val btnComponentSDK: Button = findViewById(R.id.btnComponentManager)
@@ -22,19 +24,23 @@ class MainPage: AppCompatActivity(){
         val btnCustomerApiManager: Button = findViewById(R.id.btnCustomerApiManager)
 
         btnTerminalManagerSDK.setOnClickListener {
-            startActivity(Intent(this, TerminalManagerActivity::class.java))
+            intentMain.putExtra("SDK_TYPE", SdkTypeConstants.Terminal)
+            startActivity(intentMain)
         }
 
         btnComponentSDK.setOnClickListener {
-            startActivity(Intent(this, ComponentManagerActivity::class.java))
+            intentMain.putExtra("SDK_TYPE", SdkTypeConstants.Component)
+            startActivity(intentMain)
         }
 
         btnFinancialSDK.setOnClickListener {
-            startActivity(Intent(this, FinancialManagerActivity::class.java))
+            intentMain.putExtra("SDK_TYPE", SdkTypeConstants.Financial)
+            startActivity(intentMain)
         }
 
         btnCustomerApiManager.setOnClickListener {
-            startActivity(Intent(this, CustomerApiManagerActivity::class.java))
+            intentMain.putExtra("SDK_TYPE", SdkTypeConstants.MDM)
+            startActivity(intentMain)
         }
     }
 }
