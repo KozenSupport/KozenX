@@ -7,9 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.kozen.support.x.R
 import com.kozen.support.x.config.SdkTypeConstants
 
-/**
- * 主页
- */
 class SdkMenuActivity: AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,17 +21,17 @@ class SdkMenuActivity: AppCompatActivity(){
         val btnCustomerApiManager: Button = findViewById(R.id.btnCustomerApiManager)
 
         btnTerminalManagerSDK.setOnClickListener {
-            intentMain.putExtra("SDK_TYPE", SdkTypeConstants.Terminal)
+            intentMain.putExtra("SDK_TYPE", SdkTypeConstants.TERMINAL)
             startActivity(intentMain)
         }
 
         btnComponentSDK.setOnClickListener {
-            intentMain.putExtra("SDK_TYPE", SdkTypeConstants.Component)
+            intentMain.putExtra("SDK_TYPE", SdkTypeConstants.COMPONENT)
             startActivity(intentMain)
         }
 
         btnFinancialSDK.setOnClickListener {
-            intentMain.putExtra("SDK_TYPE", SdkTypeConstants.Financial)
+            intentMain.putExtra("SDK_TYPE", SdkTypeConstants.FINANCIAL)
             startActivity(intentMain)
         }
 

@@ -73,9 +73,9 @@ object SdkManager {
     fun initSKD(context : Context, sdkType : String){
         when(sdkType){
             SdkTypeConstants.MDM ->  initMDM(context)
-            SdkTypeConstants.Component -> initComponentSDK(context)
-            SdkTypeConstants.Terminal -> initTerminalSDK(context)
-            SdkTypeConstants.Financial -> initFinancialSDK(context)
+            SdkTypeConstants.COMPONENT -> initComponentSDK(context)
+            SdkTypeConstants.TERMINAL -> initTerminalSDK(context)
+            SdkTypeConstants.FINANCIAL -> initFinancialSDK(context)
             else -> CommonTools.showMethodDialog(context,"Error","No SdkType Info!")
         }
     }

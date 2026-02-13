@@ -66,9 +66,9 @@ object CommonTools {
     fun showHowToIntegrate(sdkType: String?, context: Context) {
         when(sdkType){
             SdkTypeConstants.MDM -> this.showHowToIntegrateMDM(context)
-            SdkTypeConstants.Component -> this.showHowToIntegrateComponent(context)
-            SdkTypeConstants.Terminal -> this.showHowToIntegrateTerminal(context)
-            SdkTypeConstants.Financial -> this.showHowToIntegrateFincial(context)
+            SdkTypeConstants.COMPONENT -> this.showHowToIntegrateComponent(context)
+            SdkTypeConstants.TERMINAL -> this.showHowToIntegrateTerminal(context)
+            SdkTypeConstants.FINANCIAL -> this.showHowToIntegrateFincial(context)
             else -> this.showMethodDialog(context,"Error!","Please check the SDK type config!")
         }
     }
