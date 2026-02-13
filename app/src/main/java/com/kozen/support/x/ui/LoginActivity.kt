@@ -54,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
 //                Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show()
 //            }
 
-            startActivity(Intent(this, MainPage::class.java))
+            startActivity(Intent(this, MdmMainActivity::class.java))
         }
 
 

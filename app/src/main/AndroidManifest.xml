@@ -19,7 +19,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:label="Kozen X"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
-
         <activity
             android:name=".ui.TestCenterActivity"
             android:exported="false" />
@@ -51,8 +50,12 @@
             </intent-filter>
 
         </activity>
-
-
+        <activity
+            android:name=".ui.MdmMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.MdmTestActivity"
+            android:exported="false" />
 
     </application>
 </manifest>
