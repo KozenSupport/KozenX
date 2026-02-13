@@ -48,7 +48,7 @@ dependencies {
     implementation(files("libs/FinancialLib_1.4.0_release.aar"))
     implementation(files("libs/TerminalManagerLib_1.2.0_release.aar"))
     implementation(files("libs/ComponentLib_1.3.0_release.aar"))
-
+    implementation("com.google.code.gson:gson:2.13.2")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

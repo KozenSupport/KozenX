@@ -17,6 +17,8 @@ object SdkManager {
     private var SDK_TYPE = "";
     private var sdkClass: Class<*>? = null
 
+    private var managerMap = mutableMapOf<String,Any>()
+
     fun init(context: Context, sdkType: String?) {
         try {
             if(sdkType == null || sdkType == ""){
@@ -101,6 +103,8 @@ object SdkManager {
     fun initComponentSDK(context : Context){
         ComponentEngine.init(context){code,msg->
             val message = if(code == 0){
+                ComponentEngine.keyboardManager?.let { managerMap.put("com.kozen.component.keyboard.IKeyboard",it) }
+                ComponentEngine.secondaryScreenManager?.let { managerMap.put("com.kozen.component.secondaryScreen.ISecondaryScreen",it) }
                 "Init ComponentSDK Success!"
             }else{
                 "Init ComponentSDK Failed! $msg"
@@ -108,11 +112,21 @@ object SdkManager {
             Log.i(LOG_TAG,message)
             Toast.makeText(context,message, Toast.LENGTH_SHORT).show()
         }
+
     }
 
     fun initTerminalSDK(context : Context){
         TerminalManager.init(context){code,msg->
             val message = if(code == 0){
+                TerminalManager.networkManager?.let { managerMap.put("com.kozen.terminalmanager.network.INetworkManager",it) }
+                TerminalManager.logManager?.let { managerMap.put("com.kozen.terminalmanager.log.ILogManager",it) }
+                TerminalManager.locationManager?.let { managerMap.put("com.kozen.terminalmanager.location.ILocationManager",it) }
+                TerminalManager.certificationManager?.let { managerMap.put("com.kozen.terminalmanager.certification.ICertificationManager",it) }
+                TerminalManager.deviceManager?.let { managerMap.put("com.kozen.terminalmanager.device.IDeviceManager",it) }
+                TerminalManager.deviceInfoManager?.let { managerMap.put("com.kozen.terminalmanager.deviceinfo.IDeviceInfoManager",it) }
+                TerminalManager.perceptionInfoManager?.let { managerMap.put("com.kozen.terminalmanager.perceptioninfo.IPerceptionInfoManager",it) }
+                TerminalManager.resourceManager?.let { managerMap.put("com.kozen.terminalmanager.resource.IResourceManager",it) }
+
                 "Init TerminalSDK Success!"
             }else{
                 "Init TerminalSDK Failed! $msg"
@@ -120,11 +134,20 @@ object SdkManager {
             Log.i(LOG_TAG,message)
             Toast.makeText(context,message, Toast.LENGTH_SHORT).show()
         }
+
     }
 
     fun initFinancialSDK(context : Context){
         FinancialEngine.init(context){ code, msg->
             val message = if(code == 0){
+                FinancialEngine.ecrManager?.let { managerMap.put("com.kozen.financial.ecr.IEcrManager",it) }
+                FinancialEngine.cardReaderManager?.let { managerMap.put("com.kozen.financial.cardreader.ICardReaderManager",it) }
+                FinancialEngine.emvManager?.let { managerMap.put("com.kozen.financial.emv.IEmvManager",it) }
+                FinancialEngine.generalManager?.let { managerMap.put("com.kozen.financial.general.IGeneralManager",it) }
+                FinancialEngine.printerManager?.let { managerMap.put("com.kozen.financial.printer.IPrinterManager",it) }
+                FinancialEngine.pinpadManager?.let { managerMap.put("com.kozen.financial.pinpad.IPinpadManager",it) }
+                FinancialEngine.scannerManager?.let { managerMap.put("com.kozen.financial.scanner.IScannerManager",it) }
+                FinancialEngine.securityManager?.let { managerMap.put("com.kozen.financial.security.ISecurityManager",it) }
                 "Init FinancialSDK Success!"
             }else{
                 "Init FinancialSDK Failed! $msg"
@@ -132,5 +155,12 @@ object SdkManager {
             Log.i(LOG_TAG,message)
             Toast.makeText(context,message, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    fun getProviderInstance(methodName: String): Any? {
+        Log.d(LOG_TAG,"methodName : $methodName , managerMap: [$managerMap]")
+        return managerMap.entries.find { (key, _) ->
+            methodName.contains(key, ignoreCase = true)
+        }?.value
     }
 }
