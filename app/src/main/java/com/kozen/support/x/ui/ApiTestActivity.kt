@@ -3,6 +3,8 @@ package com.kozen.support.x.ui
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -54,6 +56,7 @@ class ApiTestActivity : AppCompatActivity() {
         val container = findViewById<LinearLayout>(R.id.containerInputs)
         val btnRun = findViewById<Button>(R.id.btnRunTest)
         val tvResult = findViewById<TextView>(R.id.tvResult)
+        val progressOverlay = findViewById<View>(R.id.progressOverlay)
         // 展示接口详情
         val paramsInfo = currentMethod.parameterTypes.joinToString { it.simpleName }
         tvInfo.text = "Method : ${currentMethod.name}\nReturn Type: ${currentMethod.returnType.simpleName}\nParameter Type: [$paramsInfo]"
@@ -79,6 +82,7 @@ class ApiTestActivity : AppCompatActivity() {
         }
 
         btnRun.setOnClickListener {
+            progressOverlay.visibility = View.VISIBLE
             try {
                 // 1. 转换参数
                 val args = editTexts.mapIndexed { index, editText ->
@@ -100,13 +104,19 @@ class ApiTestActivity : AppCompatActivity() {
                 } else {
                     currentMethod.invoke(receiver, *args)
                 }
+                tvResult.text = "calling..."
+                // 模拟耗时任务
+                Handler(Looper.getMainLooper()).postDelayed({
+                    progressOverlay.visibility = View.GONE
+                    tvResult.text = "Return result:\n${com.google.gson.Gson().toJson(result)?: "void/null"}"
+                }, 1000)
 
-                tvResult.text = "Return result:\n${com.google.gson.Gson().toJson(result)?: "void/null"}"
             } catch (e: Exception) {
                 Log.e(LOG_TAG,"Execute Method Error",e)
                 val errorMsg = e.cause?.toString() ?: e.toString()
                 CommonTools.showMethodDialog(this,"Execute Method Error",errorMsg)
             }
+
         }
     }
 
