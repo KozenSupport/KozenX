@@ -60,7 +60,7 @@ class ApiTestActivity : AppCompatActivity() {
 
         // 动态生成输入框
         currentMethod.parameterTypes.forEachIndexed { index, type ->
-            if (View::class.java.isAssignableFrom(type)) {
+            if (View::class.java.isAssignableFrom(type) || type.isInterface) {
                 val tv = TextView(this).apply {
                     text = "Parameter: ${type.simpleName} (will Auto-created & Injected for testing)"
                     setTextColor(Color.BLUE)
