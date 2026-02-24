@@ -32,7 +32,11 @@ class ApiTestActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.api_test_activity)
+        getMethodInfo()
+        initView()
+    }
 
+    private fun getMethodInfo(){
         val methodInfo = intent.getParcelableExtra<MethodInfo?>("METHOD_INFO")
         try {
             val method = methodInfo!!.toMethod()
@@ -40,16 +44,10 @@ class ApiTestActivity : AppCompatActivity() {
             method.setAccessible(true)
             // 现在你可以使用这个 method 对象进行反射操作了
             currentMethod = method
-        } catch (e: ClassNotFoundException) {
-            e.printStackTrace()
-            // 处理异常：类或方法不存在
-        } catch (e: NoSuchMethodException) {
-            e.printStackTrace()
+        } catch (e: Exception) {
+            Log.e(LOG_TAG,"Get Method Info Error",e)
         }
-
-        initView()
     }
-
     private fun initView() {
         editTexts.clear()
         val tvInfo = findViewById<TextView>(R.id.tvApiInfo)
@@ -84,11 +82,11 @@ class ApiTestActivity : AppCompatActivity() {
         btnRun.setOnClickListener {
             progressOverlay.visibility = View.VISIBLE
             try {
+                tvResult.text = "calling..."
                 // 1. 转换参数
                 val args = editTexts.mapIndexed { index, editText ->
                     castValue(editText.text.toString(), currentMethod.parameterTypes[index])
                 }.toTypedArray()
-
                 // 2. 确定调用主体 (Receiver)
                 val isStatic = java.lang.reflect.Modifier.isStatic(currentMethod.modifiers)
                 val receiver = if (isStatic) null else SdkManager.getProviderInstance(currentMethod.toString())
@@ -97,26 +95,24 @@ class ApiTestActivity : AppCompatActivity() {
                     CommonTools.showMethodDialog(this,"Error","Failed to get SDK Instance (it's a non-static method)")
                     return@setOnClickListener
                 }
-
                 // 3. 执行调用
                 val result = if (args.isEmpty()) {
                     currentMethod.invoke(receiver)
                 } else {
                     currentMethod.invoke(receiver, *args)
                 }
-                tvResult.text = "calling..."
                 // 模拟耗时任务
                 Handler(Looper.getMainLooper()).postDelayed({
                     progressOverlay.visibility = View.GONE
                     tvResult.text = "Return result:\n${com.google.gson.Gson().toJson(result)?: "void/null"}"
                 }, 1000)
-
             } catch (e: Exception) {
+                tvResult.text = "Execute Method Error: ${e.message}"
+                progressOverlay.visibility = View.GONE
                 Log.e(LOG_TAG,"Execute Method Error",e)
                 val errorMsg = e.cause?.toString() ?: e.toString()
                 CommonTools.showMethodDialog(this,"Execute Method Error",errorMsg)
             }
-
         }
     }
 
@@ -150,7 +146,6 @@ class ApiTestActivity : AppCompatActivity() {
                 }
         }
     }
-
     private fun createTestView(type: Class<*>): View {
         return try {
             // 反射创建 View 实例
@@ -159,7 +154,7 @@ class ApiTestActivity : AppCompatActivity() {
 
             // 设置一个显眼的背景色和宽高，方便测试时一眼看到它
             view.setBackgroundColor(Color.parseColor("#80FF0000")) // 半透明红色
-            val size = (resources.displayMetrics.density * 200).toInt() // 200dp
+            val size = (resources.displayMetrics.density * 2000).toInt() // 200dp
             val params = FrameLayout.LayoutParams(size, size).apply {
                 gravity = Gravity.CENTER // 居中显示
             }
@@ -215,6 +210,4 @@ class ApiTestActivity : AppCompatActivity() {
             }
         }
     }
-
-
 }

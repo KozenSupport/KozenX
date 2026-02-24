@@ -18,16 +18,14 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
 
+        setContentView(R.layout.activity_login)
 
         val emailInput = findViewById<EditText>(R.id.etEmail)
         val passwordInput = findViewById<EditText>(R.id.etPassword)
         val loginBtn = findViewById<Button>(R.id.btnLogin)
         val forgotPwd = findViewById<TextView>(R.id.tvForgot)
         var register = findViewById<TextView>(R.id.tvRegister)
-
-
         loginBtn.setOnClickListener {
 //            val email = emailInput.text.toString().trim()
 //            val password = passwordInput.text.toString().trim()
