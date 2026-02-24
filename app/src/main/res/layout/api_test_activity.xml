@@ -99,7 +99,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="please wait...."
+                android:text="In Progress...."
                 android:textColor="#FFFFFF"
                 android:layout_marginStart="8dp" />
         </LinearLayout>

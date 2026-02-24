@@ -1,6 +1,10 @@
 package com.kozen.support.x.utils
 
 import android.content.Context
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.kozen.support.x.config.SdkTypeConstants
 
@@ -71,5 +75,23 @@ object CommonTools {
             SdkTypeConstants.FINANCIAL -> this.showHowToIntegrateFincial(context)
             else -> this.showMethodDialog(context,"Error!","Please check the SDK type config!")
         }
+    }
+
+
+    fun TextView.setTextWithColors(
+        vararg parts: Pair<String, Int> // Pair<文本段, 颜色资源ID或ColorInt>
+    ) {
+        val spannable = SpannableStringBuilder()
+        parts.forEach { (text, color) ->
+            val start = spannable.length
+            spannable.append(text)
+            spannable.setSpan(
+                ForegroundColorSpan(color),
+                start,
+                spannable.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+        text = spannable
     }
 }

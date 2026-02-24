@@ -3,11 +3,13 @@ package com.kozen.support.x.utils
 //noinspection SuspiciousImport
 import android.R
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import java.lang.reflect.Method
 import androidx.core.content.withStyledAttributes
+import com.kozen.support.x.utils.CommonTools.setTextWithColors
 
 class ApiAdapter(
     private val originalList: List<Method>,
@@ -46,10 +48,22 @@ class ApiAdapter(
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val method = displayList[position]
+        val methodClass= getMethodClass(method.declaringClass.toString())
         // 此处 position + 1 是当前显示列表的序号
-        holder.tv.text = "${position + 1}. ${method.name}"
+//        holder.tv.text = "${position + 1}. $methodClass -- ${method.name}"
+        holder.tv.setTextWithColors(
+            "${position + 1}. " to Color.BLACK,
+            "$methodClass " to Color.BLACK,
+            "\n --> ${method.name}" to Color.BLUE
+        )
         holder.itemView.setOnClickListener { onClick(method) }
     }
+
+    fun getMethodClass(declaringClass : String) : String{
+
+        return declaringClass.substringAfterLast('.').trim()
+    }
+
 
     override fun getItemCount(): Int = displayList.size
 

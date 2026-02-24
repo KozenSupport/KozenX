@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Kozen X</string>
     <string name="login_account_placeholder">Email</string>
-    <string name="login_psd_placeholder">Password</string>
+    <string name="login_psd_placeholder">please input your pass code....</string>
     <string name="login_btn_login">Login</string>
     <string name="login_link_forgetPsd">Forget Password?</string>
     <string name="login_app_description">⚠️Please note that this is a non-public tool app, intended for internal use by the Kozen FAE only.</string>

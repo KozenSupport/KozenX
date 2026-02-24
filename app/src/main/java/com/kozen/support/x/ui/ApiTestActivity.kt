@@ -25,7 +25,7 @@ import java.lang.reflect.Method
 
 class ApiTestActivity : AppCompatActivity() {
 
-    private val LOG_TAG = "API TEST";
+    private val LOG_TAG = "API TEST"
     private lateinit var currentMethod: Method
     private val editTexts = mutableListOf<EditText>()
 
@@ -41,7 +41,7 @@ class ApiTestActivity : AppCompatActivity() {
         try {
             val method = methodInfo!!.toMethod()
             // 如果需要访问私有方法，可以设置：
-            method.setAccessible(true)
+            method.isAccessible = true
             // 现在你可以使用这个 method 对象进行反射操作了
             currentMethod = method
         } catch (e: Exception) {
@@ -125,6 +125,7 @@ class ApiTestActivity : AppCompatActivity() {
             return try {
                 createTestView(type)
             } catch (e: Exception) {
+                Log.e(LOG_TAG,"cast View type parameter error: ",e)
                 // 兜底：如果具体子类创建失败，直接给一个基础 View
                 val baseView = View(this)
                 findViewById<FrameLayout>(android.R.id.content).addView(baseView)
@@ -164,7 +165,7 @@ class ApiTestActivity : AppCompatActivity() {
                 val root = findViewById<FrameLayout>(android.R.id.content)
 
                 // 为了防止多次调用产生堆叠，先移除之前的测试 View（可选）
-                // root.findViewWithTag<View>("SDK_TEST_VIEW")?.let { root.removeView(it) }
+                root.findViewWithTag<View>("SDK_TEST_VIEW")?.let { root.removeView(it) }
 
                 view.tag = "SDK_TEST_VIEW"
                 root.addView(view, params)
