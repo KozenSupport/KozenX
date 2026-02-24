@@ -13,11 +13,13 @@ import java.lang.reflect.Modifier
 
 object SdkManager {
 
-    private val LOG_TAG = "SDK MANAGER"
-    private var SDK_TYPE = "";
+    private const val LOG_TAG = "SDK MANAGER"
+    private var SDK_TYPE = ""
     private var sdkClass: Class<*>? = null
 
     private var managerMap = mutableMapOf<String,Any>()
+
+    private var methodMap = mutableMapOf<String,List<Method>>()
 
     fun init(context: Context, sdkType: String?) {
         try {
@@ -27,6 +29,7 @@ object SdkManager {
             }
             SDK_TYPE = sdkType;
             initSKD(context,sdkType)
+            getAllApiMethods()
             Log.i(LOG_TAG,"init success : $SDK_TYPE")
         } catch (e: Exception) {
             Log.e(LOG_TAG,"init failed : $SDK_TYPE",e)
@@ -36,6 +39,33 @@ object SdkManager {
     fun releaseMDM() {
         try {
             CustomAPI.release()
+            Log.i(LOG_TAG,"released : $SDK_TYPE")
+        } catch (e: Exception) {
+            Log.e(LOG_TAG,"released failed : $SDK_TYPE",e)
+        }
+    }
+
+    fun releaseComponent() {
+        try {
+            ComponentEngine.deInit()
+            Log.i(LOG_TAG,"released : $SDK_TYPE")
+        } catch (e: Exception) {
+            Log.e(LOG_TAG,"released failed : $SDK_TYPE",e)
+        }
+    }
+
+    fun releaseTerminal() {
+        try {
+//            TerminalManager.deInit()
+            Log.i(LOG_TAG,"released : $SDK_TYPE")
+        } catch (e: Exception) {
+            Log.e(LOG_TAG,"released failed : $SDK_TYPE",e)
+        }
+    }
+
+    fun releaseFinancial() {
+        try {
+//            FinancialEngine.deInit()
             Log.i(LOG_TAG,"released : $SDK_TYPE")
         } catch (e: Exception) {
             Log.e(LOG_TAG,"released failed : $SDK_TYPE",e)
@@ -53,8 +83,12 @@ object SdkManager {
         }
     }
 
-    fun getAllApiMethods(): List<Method> {
-        return buildList {
+    fun getAllApiMethods(sdkType : String): List<Method>? {
+        return methodMap[sdkType]
+    }
+
+    fun getAllApiMethods() {
+        methodMap[SDK_TYPE] = buildList {
             SdkTypeConstants.getClassNameList(SDK_TYPE).forEach { className ->
                 try {
                     val methods = Class.forName(className).declaredMethods
@@ -65,14 +99,26 @@ object SdkManager {
                 }
             }
         }.filter {
-//            Modifier.isStatic(it.modifiers) &&
+            val mlist = SdkTypeConstants.getMethodNameList(SDK_TYPE)
+            (mlist.isEmpty() &&
                     Modifier.isPublic(it.modifiers) &&
                     it.name != "init" &&
-                    it.name != "release"
+                    it.name != "release") ||
+//            Modifier.isStatic(it.modifiers) &&
+                    (mlist.contains(it.name) &&
+                    Modifier.isPublic(it.modifiers) &&
+                    it.name != "init" &&
+                    it.name != "release")
         }.sortedBy { it.name }
+
+
     }
 
     fun initSKD(context : Context, sdkType : String){
+        if(sdkType == ""){
+            CommonTools.showMethodDialog(context,"Error!","Please check SDK type config!")
+            return
+        }
         when(sdkType){
             SdkTypeConstants.MDM ->  initMDM(context)
             SdkTypeConstants.COMPONENT -> initComponentSDK(context)
@@ -89,10 +135,10 @@ object SdkManager {
         }
         when(sdkType){
             SdkTypeConstants.MDM ->  releaseMDM()
-//            SdkTypeConstants.Component -> initComponentSDK(context)
-//            SdkTypeConstants.Terminal -> initTerminalSDK(context)
-//            SdkTypeConstants.Financial -> initFinancialSDK(context)
-//            else -> CommonTools.showMethodDialog(context,"Error","No SdkType Info!")
+            SdkTypeConstants.COMPONENT -> releaseComponent()
+            SdkTypeConstants.TERMINAL -> releaseTerminal()
+            SdkTypeConstants.FINANCIAL -> releaseFinancial()
+            else -> CommonTools.showMethodDialog(context,"Error","No SdkType Info!")
         }
         Log.i(LOG_TAG,"released : $SDK_TYPE")
     }

@@ -4,24 +4,28 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kozen.support.x.R
+import com.kozen.support.x.model.MethodInfo
+import com.kozen.support.x.utils.ApiAdapter
 import com.kozen.support.x.utils.CommonTools
 import com.kozen.support.x.utils.SdkManager
-import com.kozen.support.x.utils.ApiAdapter
+
 
 class ApiListActivity : AppCompatActivity() {
 
     private lateinit var apiAdapter: ApiAdapter
 
-    private var sdkType: String? = ""
+    private var sdkType: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sdkType = intent.getStringExtra("SDK_TYPE")
+        sdkType = intent.getStringExtra("SDK_TYPE").toString()
 
         // 初始化 SDK
         SdkManager.init(this,sdkType)
@@ -38,11 +42,15 @@ class ApiListActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        apiAdapter = ApiAdapter(SdkManager.getAllApiMethods().toMutableList()) { method ->
-            // 点击跳转逻辑
-            val intent = Intent(this, ApiTestActivity::class.java)
-            intent.putExtra("METHOD_NAME", method.name)
-            startActivity(intent)
+        SdkManager.getAllApiMethods(sdkType)?.let {
+            apiAdapter = ApiAdapter(it.toMutableList()) { method ->
+                // 点击跳转逻辑
+                val intent = Intent(this, ApiTestActivity::class.java)
+                val methodInfo = MethodInfo(method)
+                intent.putExtra("METHOD_INFO", methodInfo)
+                intent.putExtra("SDK_TYPE", sdkType)
+                startActivity(intent)
+            }
         }
         val rv = findViewById<RecyclerView>(R.id.rvApiList)
         rv.layoutManager = LinearLayoutManager(this)

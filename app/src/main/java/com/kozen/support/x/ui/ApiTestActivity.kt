@@ -7,12 +7,19 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.kozen.support.x.R
+import com.kozen.support.x.model.MethodInfo
 import com.kozen.support.x.utils.CommonTools
 import com.kozen.support.x.utils.SdkManager
 import java.lang.reflect.Method
+
 
 class ApiTestActivity : AppCompatActivity() {
 
@@ -24,8 +31,19 @@ class ApiTestActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.api_test_activity)
 
-        val methodName = intent.getStringExtra("METHOD_NAME")
-        currentMethod = SdkManager.getAllApiMethods().find { it.name == methodName } ?: return
+        val methodInfo = intent.getParcelableExtra<MethodInfo?>("METHOD_INFO")
+        try {
+            val method = methodInfo!!.toMethod()
+            // 如果需要访问私有方法，可以设置：
+            method.setAccessible(true)
+            // 现在你可以使用这个 method 对象进行反射操作了
+            currentMethod = method
+        } catch (e: ClassNotFoundException) {
+            e.printStackTrace()
+            // 处理异常：类或方法不存在
+        } catch (e: NoSuchMethodException) {
+            e.printStackTrace()
+        }
 
         initView()
     }
@@ -44,7 +62,7 @@ class ApiTestActivity : AppCompatActivity() {
         currentMethod.parameterTypes.forEachIndexed { index, type ->
             if (View::class.java.isAssignableFrom(type)) {
                 val tv = TextView(this).apply {
-                    text = "Parameter: ${type.simpleName} (Auto-created & Injected)"
+                    text = "Parameter: ${type.simpleName} (will Auto-created & Injected for testing)"
                     setTextColor(Color.BLUE)
                     setPadding(0, 20, 0, 10)
                 }
