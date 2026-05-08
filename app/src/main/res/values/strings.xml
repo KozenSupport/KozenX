@@ -26,11 +26,11 @@
     <string name="login_wrong_passcode">密码错误</string>
 
     <string name="main_page_welcome">Kozen SDK 测试中心</string>
-    <string name="sdk_terminal_manager">终端管理 SDK</string>
-    <string name="sdk_component_manager">组件 SDK</string>
-    <string name="sdk_financial_manager">金融 SDK</string>
+    <string name="sdk_terminal_manager">Terminal SDK</string>
+    <string name="sdk_component_manager">Component SDK</string>
+    <string name="sdk_financial_manager">Financial SDK</string>
     <string name="sdk_payment_demo">支付演示</string>
-    <string name="sdk_customer_api">客户 API</string>
+    <string name="sdk_customer_api">Customer API</string>
 
     <string name="register_title">注册</string>
     <string name="register_username_hint">邮箱地址</string>
