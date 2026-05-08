@@ -28,6 +28,7 @@ captures/
 *.aab
 *.apk
 output-metadata.json
+tmp_device_apks/
 
 # IntelliJ
 .idea/
