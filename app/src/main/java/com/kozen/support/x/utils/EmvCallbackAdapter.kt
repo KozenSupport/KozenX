@@ -12,6 +12,7 @@ import com.kozen.financial.engine.FinancialEngine
 import com.kozen.financial.util.emv.tlv.BerTag
 import com.kozen.financial.util.emv.tlv.BerTlv
 import com.kozen.financial.util.emv.tlv.BerTlvParser
+import com.kozen.support.x.R
 import com.kozen.support.x.config.DeviceConfig
 import com.kozen.support.x.model.TransactionData
 import com.kozen.support.x.ui.PaymentActivity
@@ -28,19 +29,20 @@ class EmvCallbackAdapter(
 
     private var currentPinDialog: PinInputDialog? = null
     private var pinFlowEndedByApp = false
-    private var lastStage = "Waiting for card"
+    private var lastStage = activity.getString(R.string.emv_stage_waiting_card)
 
     override fun onEmvProcess(type: Int, bundle: Bundle) {
         Log.d(TAG, "onEmvProcess type=$type info=${Gson().toJson(bundle)}")
         when (type) {
-            POIEmvCoreManager.DEVICE_CONTACT -> reportProgress("Processing contact card...")
-            POIEmvCoreManager.DEVICE_CONTACTLESS -> reportProgress("Processing contactless card...")
+            POIEmvCoreManager.DEVICE_CONTACT -> reportProgress(activity.getString(R.string.emv_progress_contact))
+            POIEmvCoreManager.DEVICE_CONTACTLESS -> reportProgress(activity.getString(R.string.emv_progress_contactless))
             POIEmvCoreManager.DEVICE_MAGSTRIPE -> {
                 transData.cardType = type
                 reportProgress(captureMagstripeInfo(bundle))
             }
-            PosEmvErrorCode.EMV_MULTI_CONTACTLESS -> updateResult(-1, "Multiple cards detected.")
-            else -> reportProgress("Processing card...")
+            PosEmvErrorCode.EMV_MULTI_CONTACTLESS ->
+                updateResult(-1, activity.getString(R.string.emv_progress_multiple_cards))
+            else -> reportProgress(activity.getString(R.string.emv_progress_card))
         }
     }
 
@@ -48,7 +50,7 @@ class EmvCallbackAdapter(
         Log.d(TAG, "onSelectApplication count=${appList.size}, first=$isFirstSelect")
         if (appList.isEmpty()) {
             emvManager.stopTransaction()
-            updateResult(-1, "No application found on card.")
+            updateResult(-1, activity.getString(R.string.emv_error_no_application))
             return
         }
 
@@ -56,15 +58,15 @@ class EmvCallbackAdapter(
         val ret = emvManager.setSelectApplicationResponse(0)
         if (ret != 0) {
             emvManager.stopTransaction()
-            updateResult(-1, "Select AID failed: $ret")
+            updateResult(-1, activity.getString(R.string.emv_error_select_aid_failed, ret))
         } else {
-            reportProgress("Application selected.")
+            reportProgress(activity.getString(R.string.emv_progress_application_selected))
         }
     }
 
     override fun onConfirmCardInfo(mode: Int, info: Bundle) {
         Log.d(TAG, "onConfirmCardInfo mode=$mode info=${Gson().toJson(info)}")
-        reportProgress("Confirming card info...")
+        reportProgress(activity.getString(R.string.emv_progress_confirm_card_info))
 
         if (DeviceConfig.pinByPass) {
             emvManager.setKernel(ByteUtils.hexStringToBytes("DF31020001"))
@@ -75,7 +77,7 @@ class EmvCallbackAdapter(
         val outBundle = Bundle()
         when (mode) {
             POIEmvCoreManager.CMD_CARD_READ_SUCCESS -> {
-                reportProgress("Card read successfully.")
+                reportProgress(activity.getString(R.string.emv_progress_card_read_success))
                 outBundle.putBoolean(POIEmvCoreManager.EmvCardInfoConstraints.OUT_CONFIRM, true)
             }
             POIEmvCoreManager.CMD_AMOUNT_CONFIG -> {
@@ -104,12 +106,12 @@ class EmvCallbackAdapter(
     }
 
     override fun onSecondTapCard() {
-        reportProgress("Please tap card again.")
+        reportProgress(activity.getString(R.string.emv_progress_second_tap))
     }
 
     override fun onRequestInputPin(info: Bundle) {
         Log.d(TAG, "onRequestInputPin info=${Gson().toJson(info)}")
-        reportProgress("Please enter PIN...")
+        reportProgress(activity.getString(R.string.emv_progress_enter_pin))
         activity.runOnUiThread {
             currentPinDialog = PinInputDialog(activity, info).apply {
                 setPinInputCallback(object : PinInputDialog.PinInputCallback {
@@ -129,19 +131,19 @@ class EmvCallbackAdapter(
                         ) {
                             pinFlowEndedByApp = true
                             emvManager.stopTransaction()
-                            updateResult(-1, "PIN canceled (verifyResult=$verifyResult)")
+                            updateResult(-1, activity.getString(R.string.emv_error_pin_canceled, verifyResult))
                             return
                         }
                         if (verifyResult == POIEmvCoreManager.EmvPinConstraints.VERIFY_TIMEOUT) {
                             pinFlowEndedByApp = true
                             emvManager.stopTransaction()
-                            updateResult(-1, "PIN timeout")
+                            updateResult(-1, activity.getString(R.string.emv_error_pin_timeout))
                             return
                         }
                         if (verifyResult < 0) {
                             pinFlowEndedByApp = true
                             emvManager.stopTransaction()
-                            updateResult(-1, "PIN input failed: $verifyResult")
+                            updateResult(-1, activity.getString(R.string.emv_error_pin_failed, verifyResult))
                             return
                         }
                         val response = Bundle().apply {
@@ -154,7 +156,7 @@ class EmvCallbackAdapter(
                     override fun onCancel() {
                         pinFlowEndedByApp = true
                         emvManager.stopTransaction()
-                        updateResult(-1, "PIN canceled")
+                        updateResult(-1, activity.getString(R.string.emv_error_pin_canceled_simple))
                     }
                 })
                 show()
@@ -164,13 +166,13 @@ class EmvCallbackAdapter(
 
     override fun onRequestOnlineProcess(info: Bundle) {
         Log.d(TAG, "onRequestOnlineProcess info=${Gson().toJson(info)}")
-        reportProgress("Authorizing online...")
+        reportProgress(activity.getString(R.string.emv_progress_authorizing))
         transData.transData = info.getByteArray(POIEmvCoreManager.EmvOnlineConstraints.EMV_DATA)
         Log.d(TAG, "CVM=${extractCvm(transData.transData)}")
 
         val ret = emvManager.setOnlineResponse(processOnlineResult("8A023030"))
         if (ret != 0) {
-            updateResult(-1, "setOnlineResponse failed: $ret")
+            updateResult(-1, activity.getString(R.string.emv_error_online_response_failed, ret))
         }
     }
 
@@ -187,29 +189,35 @@ class EmvCallbackAdapter(
         when (resultCode) {
             PosEmvErrorCode.EMV_CANCEL -> {
                 if (pinFlowEndedByApp) return
-                updateResult(-1, "Transaction canceled at stage: $lastStage (code=$resultCode).")
+                updateResult(
+                    -1,
+                    activity.getString(R.string.emv_error_transaction_canceled_stage, lastStage, resultCode)
+                )
                 return
             }
             PosEmvErrorCode.EMV_TIMEOUT -> {
-                updateResult(-1, "Transaction timeout at stage: $lastStage (code=$resultCode).")
+                updateResult(
+                    -1,
+                    activity.getString(R.string.emv_error_transaction_timeout_stage, lastStage, resultCode)
+                )
                 return
             }
             PosEmvErrorCode.EMV_MULTI_CONTACTLESS -> {
-                updateResult(-1, "Multiple cards detected.")
+                updateResult(-1, activity.getString(R.string.emv_progress_multiple_cards))
                 return
             }
             PosEmvErrorCode.EMV_FALLBACK -> {
-                updateResult(-1, "Fallback is not allowed in this demo.")
+                updateResult(-1, activity.getString(R.string.emv_error_fallback_not_allowed))
                 return
             }
             PosEmvErrorCode.EMV_OTHER_ICC_INTERFACE -> {
-                reportProgress("Please insert card.")
+                reportProgress(activity.getString(R.string.emv_progress_insert_card))
                 return
             }
             PosEmvErrorCode.EMV_SEE_PHONE,
             PosEmvErrorCode.APPLE_VAS_WAITING_INTERVENTION,
             PosEmvErrorCode.APPLE_VAS_WAITING_ACTIVATION -> {
-                reportProgress("Please see phone.")
+                reportProgress(activity.getString(R.string.emv_progress_see_phone))
                 return
             }
         }
@@ -225,7 +233,7 @@ class EmvCallbackAdapter(
             PosEmvErrorCode.APPLE_VAS_APPROVED -> {
                 updateResult(0, buildApprovedMessage(resultCode))
             }
-            else -> updateResult(-1, "Transaction failed: $resultCode")
+            else -> updateResult(-1, activity.getString(R.string.emv_error_transaction_failed_code, resultCode))
         }
     }
 
@@ -246,8 +254,8 @@ class EmvCallbackAdapter(
                 "track3=${trackDebug(track3)}"
         )
 
-        return transData.cardNumber?.let { "Magstripe card read: $it" }
-            ?: "Processing magstripe card..."
+        return transData.cardNumber?.let { activity.getString(R.string.emv_progress_magstripe_read, it) }
+            ?: activity.getString(R.string.emv_progress_magstripe)
     }
 
     private fun hasMagstripeTrack(info: Bundle): Boolean {
@@ -296,13 +304,31 @@ class EmvCallbackAdapter(
 
     private fun buildApprovedMessage(resultCode: Int): String {
         return buildString {
-            append("Amount: ${transData.transAmount}")
-            append("\nResult: $resultCode")
+            append(activity.getString(R.string.payment_result_amount, transData.transAmount))
+            append("\n")
+            append(activity.getString(R.string.payment_result_code, resultCode))
             if (transData.cardType == POIEmvCoreManager.DEVICE_MAGSTRIPE) {
-                append("\nCard: Magstripe")
+                append("\n")
+                append(activity.getString(R.string.payment_result_card_magstripe))
             }
-            transData.cardNumber?.let { append("\nPAN: $it") }
-            append("\nCVM: ${extractCvm(transData.transData)}")
+            transData.cardNumber?.let {
+                append("\n")
+                append(activity.getString(R.string.payment_result_pan, it))
+            }
+            append("\n")
+            append(activity.getString(R.string.payment_result_cvm, localizedCvm(transData.transData)))
+        }
+    }
+
+    private fun localizedCvm(data: ByteArray?): String {
+        return when (extractCvm(data)) {
+            "no CVM" -> activity.getString(R.string.emv_cvm_no_cvm)
+            "signature" -> activity.getString(R.string.emv_cvm_signature)
+            "online PIN" -> activity.getString(R.string.emv_cvm_online_pin)
+            "enciphered PIN" -> activity.getString(R.string.emv_cvm_enciphered_pin)
+            "plaintext PIN" -> activity.getString(R.string.emv_cvm_plaintext_pin)
+            "CDCVM" -> activity.getString(R.string.emv_cvm_cdcvm)
+            else -> activity.getString(R.string.emv_cvm_unknown)
         }
     }
 

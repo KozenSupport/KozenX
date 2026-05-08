@@ -1,0 +1,162 @@
+<resources>
+    <string name="app_name">Kozen X</string>
+
+    <string name="common_ok">OK</string>
+    <string name="common_cancel">Cancel</string>
+    <string name="common_error">Error</string>
+    <string name="common_warning">Notice</string>
+    <string name="common_in_progress">In progress...</string>
+
+    <string name="language_current">English</string>
+    <string name="language_select_title">Select Language</string>
+    <string name="language_chinese">中文</string>
+    <string name="language_english">English</string>
+
+    <string name="logo_description">Kozen Logo</string>
+    <string name="login_account_placeholder">Email</string>
+    <string name="login_psd_placeholder">Please enter passcode</string>
+    <string name="login_btn_login">Login</string>
+    <string name="login_link_forgetPsd">Forget Password?</string>
+    <string name="login_link_register">Register New?</string>
+    <string name="login_app_description">Please note that this is a non-public tool app, intended for internal use by Kozen FAE only.</string>
+    <string name="login_app_config_account">Demo account: henry@demo.com</string>
+    <string name="login_app_config_psd">Demo password: Abc12345</string>
+    <string name="login_success">Login Success</string>
+    <string name="login_failed_title">Login Failed</string>
+    <string name="login_wrong_passcode">Wrong passcode.</string>
+
+    <string name="main_page_welcome">Kozen SDK Test Center</string>
+    <string name="sdk_terminal_manager">Terminal Manager SDK</string>
+    <string name="sdk_component_manager">Component SDK</string>
+    <string name="sdk_financial_manager">Financial SDK</string>
+    <string name="sdk_payment_demo">Payment Demo</string>
+    <string name="sdk_customer_api">Customer API</string>
+
+    <string name="register_title">Register</string>
+    <string name="register_username_hint">Email Address</string>
+    <string name="register_password_hint">Password</string>
+    <string name="register_confirm_password_hint">Confirm Password</string>
+    <string name="register_btn_submit">Register</string>
+    <string name="register_btn_back_to_login">Back To Login</string>
+    <string name="register_success">Register Success</string>
+    <string name="register_failed">Register Failed</string>
+    <string name="register_password_not_match">The two passwords did not match.</string>
+    <string name="register_username_empty">Account cannot be empty.</string>
+    <string name="register_password_empty">Password cannot be empty.</string>
+    <string name="register_confirm_password_empty">Please confirm your password.</string>
+    <string name="register_username_exists">This email address is already associated with an account.</string>
+    <string name="register_min_password_length">Password length must be at least 8 characters.</string>
+    <string name="register_username_format_error">Invalid email format.</string>
+    <string name="register_progress">Registering...</string>
+
+    <string name="api_sdk_version">SDK Version: %1$s</string>
+    <string name="api_sdk_version_detecting">SDK Version: detecting...</string>
+    <string name="api_how_to_integrate">How to Integrate?</string>
+    <string name="api_search_hint">Search...</string>
+    <string name="api_details">Details:</string>
+    <string name="api_loading">Loading...</string>
+    <string name="api_parameters">Parameters:</string>
+    <string name="api_start_test">Start Test</string>
+    <string name="api_return_result">Return Result:</string>
+    <string name="api_waiting_test">Waiting test...</string>
+    <string name="api_method_info">Method: %1$s\nReturn Type: %2$s\nParameter Type: [%3$s]</string>
+    <string name="api_auto_parameter">Parameter: %1$s (will be auto-created and injected for testing)</string>
+    <string name="api_input_hint">Please input: (%1$s)</string>
+    <string name="api_calling">Calling...</string>
+    <string name="api_failed_sdk_instance">Failed to get SDK instance (it is a non-static method)</string>
+    <string name="api_return_result_value">Return result:\n%1$s</string>
+    <string name="api_execute_error">Execute method error: %1$s</string>
+    <string name="api_json_warning_title">Warning</string>
+    <string name="api_json_warning_message">The parameter should be in JSON format.</string>
+    <string name="api_test_view_removed">Test view removed</string>
+    <string name="api_callback_title">Callback: %1$s</string>
+    <string name="api_callback_message">Method: %1$s\n\n%2$s</string>
+    <string name="api_callback_param">Param[%1$d]: %2$s</string>
+    <string name="api_no_params">No params</string>
+
+    <string name="integrate_title">How To Integrate?</string>
+    <string name="integrate_mdm">1. Import the aar/jar file.\n2. Call CustomAPI.init(context) in onCreate().\n3. Call any API you want.\n4. Call CustomAPI.release() in onDestroy().</string>
+    <string name="integrate_component">1. Import the aar/jar file.\n2. Call ComponentEngine.init(context) in onCreate().\n3. Obtain the corresponding manager to execute API calls.</string>
+    <string name="integrate_terminal">1. Import the aar/jar file.\n2. Call TerminalManager.init(context) in onCreate().\n3. Obtain the corresponding manager to execute API calls.</string>
+    <string name="integrate_financial">1. Import the aar/jar file.\n2. Call FinancialEngine.init(context) in onCreate().\n3. Obtain the corresponding manager to execute API calls.</string>
+    <string name="sdk_type_config_error">Please check the SDK type config.</string>
+    <string name="sdk_type_missing">No SDK type info.</string>
+    <string name="sdk_init_component_success">Component SDK initialized successfully.</string>
+    <string name="sdk_init_component_failed">Component SDK init failed: %1$s</string>
+    <string name="sdk_init_terminal_success">Terminal SDK initialized successfully.</string>
+    <string name="sdk_init_terminal_failed">Terminal SDK init failed: %1$s</string>
+    <string name="sdk_init_financial_success">Financial SDK initialized successfully.</string>
+    <string name="sdk_init_financial_failed">Financial SDK init failed: %1$s</string>
+
+    <string name="payment_title">Payment</string>
+    <string name="payment_amount_label">Amount (CNY)</string>
+    <string name="payment_delete">DEL</string>
+    <string name="payment_cancel">Cancel</string>
+    <string name="payment_confirm">Confirm</string>
+    <string name="payment_loading_initializing">Initializing...</string>
+    <string name="payment_status_sdk_initializing">Initializing Financial SDK...</string>
+    <string name="payment_hint_enter_while_init">You can enter amount while initialization runs.</string>
+    <string name="payment_hint_reused_after_init">This will be reused after the first successful init.</string>
+    <string name="payment_status_sdk_init_failed">Financial SDK init failed.</string>
+    <string name="payment_dialog_init_failed">Init Failed</string>
+    <string name="payment_status_preparing_keys">Preparing demo keys...</string>
+    <string name="payment_hint_keys_once">This is only done once per app process.</string>
+    <string name="payment_status_key_loading_failed">Demo key loading failed.</string>
+    <string name="payment_msg_key_loading_failed">Failed to write demo keys</string>
+    <string name="payment_status_ready">Ready</string>
+    <string name="payment_hint_ready">Enter amount and present card after tapping CONFIRM.</string>
+    <string name="payment_dialog_please_wait">Please Wait</string>
+    <string name="payment_msg_sdk_initializing">Financial SDK is still initializing.</string>
+    <string name="payment_msg_transaction_running">A transaction is already running.</string>
+    <string name="payment_dialog_invalid_amount">Invalid Amount</string>
+    <string name="payment_msg_invalid_amount">Please enter an amount greater than 0.</string>
+    <string name="payment_loading_present_card">Please present card...</string>
+    <string name="payment_error_transaction_failed">Transaction failed</string>
+    <string name="payment_error_canceled_by_user">Canceled by user</string>
+    <string name="payment_dialog_approved">Approved</string>
+    <string name="payment_msg_success">Transaction successful</string>
+    <string name="payment_dialog_declined">Declined</string>
+    <string name="payment_msg_failed">Transaction failed</string>
+    <string name="payment_hint_transaction_running">Transaction is running.</string>
+    <string name="payment_result_amount">Amount: %1$d</string>
+    <string name="payment_result_code">Result: %1$d</string>
+    <string name="payment_result_card_magstripe">Card: Magstripe</string>
+    <string name="payment_result_pan">PAN: %1$s</string>
+    <string name="payment_result_cvm">CVM: %1$s</string>
+
+    <string name="pin_title">Enter PIN</string>
+
+    <string name="emv_stage_waiting_card">Waiting for card</string>
+    <string name="emv_progress_contact">Processing contact card...</string>
+    <string name="emv_progress_contactless">Processing contactless card...</string>
+    <string name="emv_progress_magstripe">Processing magstripe card...</string>
+    <string name="emv_progress_card">Processing card...</string>
+    <string name="emv_progress_multiple_cards">Multiple cards detected.</string>
+    <string name="emv_error_no_application">No application found on card.</string>
+    <string name="emv_error_select_aid_failed">Select AID failed: %1$d</string>
+    <string name="emv_progress_application_selected">Application selected.</string>
+    <string name="emv_progress_confirm_card_info">Confirming card info...</string>
+    <string name="emv_progress_card_read_success">Card read successfully.</string>
+    <string name="emv_progress_second_tap">Please tap card again.</string>
+    <string name="emv_progress_enter_pin">Please enter PIN...</string>
+    <string name="emv_error_pin_canceled">PIN canceled (verifyResult=%1$d)</string>
+    <string name="emv_error_pin_canceled_simple">PIN canceled</string>
+    <string name="emv_error_pin_timeout">PIN timeout</string>
+    <string name="emv_error_pin_failed">PIN input failed: %1$d</string>
+    <string name="emv_progress_authorizing">Authorizing online...</string>
+    <string name="emv_error_online_response_failed">setOnlineResponse failed: %1$d</string>
+    <string name="emv_error_transaction_canceled_stage">Transaction canceled at stage: %1$s (code=%2$d).</string>
+    <string name="emv_error_transaction_timeout_stage">Transaction timeout at stage: %1$s (code=%2$d).</string>
+    <string name="emv_error_fallback_not_allowed">Fallback is not allowed in this demo.</string>
+    <string name="emv_progress_insert_card">Please insert card.</string>
+    <string name="emv_progress_see_phone">Please see phone.</string>
+    <string name="emv_error_transaction_failed_code">Transaction failed: %1$d</string>
+    <string name="emv_progress_magstripe_read">Magstripe card read: %1$s</string>
+    <string name="emv_cvm_unknown">unknown</string>
+    <string name="emv_cvm_no_cvm">no CVM</string>
+    <string name="emv_cvm_signature">signature</string>
+    <string name="emv_cvm_online_pin">online PIN</string>
+    <string name="emv_cvm_enciphered_pin">enciphered PIN</string>
+    <string name="emv_cvm_plaintext_pin">plaintext PIN</string>
+    <string name="emv_cvm_cdcvm">CDCVM</string>
+</resources>

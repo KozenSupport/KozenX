@@ -15,7 +15,6 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.kozen.support.x.R
 import com.kozen.support.x.model.MethodInfo
 import com.kozen.support.x.utils.CommonTools
@@ -23,7 +22,7 @@ import com.kozen.support.x.utils.SdkManager
 import java.lang.reflect.Method
 
 
-class ApiTestActivity : AppCompatActivity() {
+class ApiTestActivity : LocalizedAppCompatActivity() {
 
     private val LOG_TAG = "API TEST"
     private lateinit var currentMethod: Method
@@ -57,13 +56,18 @@ class ApiTestActivity : AppCompatActivity() {
         val progressOverlay = findViewById<View>(R.id.progressOverlay)
         // 展示接口详情
         val paramsInfo = currentMethod.parameterTypes.joinToString { it.simpleName }
-        tvInfo.text = "Method : ${currentMethod.name}\nReturn Type: ${currentMethod.returnType.simpleName}\nParameter Type: [$paramsInfo]"
+        tvInfo.text = getString(
+            R.string.api_method_info,
+            currentMethod.name,
+            currentMethod.returnType.simpleName,
+            paramsInfo
+        )
 
         // 动态生成输入框
         currentMethod.parameterTypes.forEachIndexed { index, type ->
             if (View::class.java.isAssignableFrom(type) || type.isInterface) {
                 val tv = TextView(this).apply {
-                    text = "Parameter: ${type.simpleName} (will Auto-created & Injected for testing)"
+                    text = getString(R.string.api_auto_parameter, type.simpleName)
                     setTextColor(Color.BLUE)
                     setPadding(0, 20, 0, 10)
                 }
@@ -71,7 +75,7 @@ class ApiTestActivity : AppCompatActivity() {
                 editTexts.add(EditText(this).apply { visibility = View.GONE }) // 占位
             }else{
                 val et = EditText(this).apply {
-                    hint = "please input : (${type.simpleName})"
+                    hint = getString(R.string.api_input_hint, type.simpleName)
                     layoutParams = LinearLayout.LayoutParams(-1, -2)
                 }
                 editTexts.add(et)
@@ -82,7 +86,7 @@ class ApiTestActivity : AppCompatActivity() {
         btnRun.setOnClickListener {
             progressOverlay.visibility = View.VISIBLE
             try {
-                tvResult.text = "calling..."
+                tvResult.text = getString(R.string.api_calling)
                 // 1. 转换参数
                 val args = editTexts.mapIndexed { index, editText ->
                     castValue(editText.text.toString(), currentMethod.parameterTypes[index])
@@ -92,7 +96,11 @@ class ApiTestActivity : AppCompatActivity() {
                 val receiver = if (isStatic) null else SdkManager.getProviderInstance(currentMethod.toString())
 
                 if (!isStatic && receiver == null) {
-                    CommonTools.showMethodDialog(this,"Error","Failed to get SDK Instance (it's a non-static method)")
+                    CommonTools.showMethodDialog(
+                        this,
+                        getString(R.string.common_error),
+                        getString(R.string.api_failed_sdk_instance)
+                    )
                     return@setOnClickListener
                 }
                 // 3. 执行调用
@@ -104,14 +112,17 @@ class ApiTestActivity : AppCompatActivity() {
                 // 模拟耗时任务
                 Handler(Looper.getMainLooper()).postDelayed({
                     progressOverlay.visibility = View.GONE
-                    tvResult.text = "Return result:\n${com.google.gson.Gson().toJson(result)?: "void/null"}"
+                    tvResult.text = getString(
+                        R.string.api_return_result_value,
+                        com.google.gson.Gson().toJson(result) ?: "void/null"
+                    )
                 }, 1000)
             } catch (e: Exception) {
-                tvResult.text = "Execute Method Error: ${e.message}"
+                tvResult.text = getString(R.string.api_execute_error, e.message.orEmpty())
                 progressOverlay.visibility = View.GONE
                 Log.e(LOG_TAG,"Execute Method Error",e)
                 val errorMsg = e.cause?.toString() ?: e.toString()
-                CommonTools.showMethodDialog(this,"Execute Method Error",errorMsg)
+                CommonTools.showMethodDialog(this, getString(R.string.api_execute_error, ""), errorMsg)
             }
         }
     }
@@ -143,7 +154,11 @@ class ApiTestActivity : AppCompatActivity() {
                     com.google.gson.Gson().fromJson(value, type)
                 } catch (e: Exception) {
                     Log.e(LOG_TAG,"JSON invalid",e)
-                    CommonTools.showMethodDialog(this,"Warning!","The parameter should be as JSON format!")
+                    CommonTools.showMethodDialog(
+                        this,
+                        getString(R.string.api_json_warning_title),
+                        getString(R.string.api_json_warning_message)
+                    )
                 }
         }
     }
@@ -173,7 +188,7 @@ class ApiTestActivity : AppCompatActivity() {
                 // 点击这个 View 自动移除自己，防止挡住 UI
                 view.setOnClickListener {
                     (it.parent as? ViewGroup)?.removeView(it)
-                    Toast.makeText(this, "Test View Removed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.api_test_view_removed), Toast.LENGTH_SHORT).show()
                 }
             }
             view
@@ -191,15 +206,15 @@ class ApiTestActivity : AppCompatActivity() {
         ) { proxy, method, args ->
             // 1. 获取回调参数详情
             val argsDetails = args?.mapIndexed { i, arg ->
-                "Param[$i]: ${arg?.toString() ?: "null"}"
-            }?.joinToString("\n") ?: "No params"
+                getString(R.string.api_callback_param, i, arg?.toString() ?: "null")
+            }?.joinToString("\n") ?: getString(R.string.api_no_params)
 
             // 2. 在主线程弹出 Toast 或更新 UI
             runOnUiThread {
                 android.app.AlertDialog.Builder(this)
-                    .setTitle("Callback: ${serviceInterface.simpleName}")
-                    .setMessage("Method: ${method.name}\n\n$argsDetails")
-                    .setPositiveButton("OK", null)
+                    .setTitle(getString(R.string.api_callback_title, serviceInterface.simpleName))
+                    .setMessage(getString(R.string.api_callback_message, method.name, argsDetails))
+                    .setPositiveButton(getString(R.string.common_ok), null)
                     .show()
             }
 

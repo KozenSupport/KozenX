@@ -3,11 +3,10 @@ package com.kozen.support.x.ui
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
 import com.kozen.support.x.R
 import com.kozen.support.x.config.SdkTypeConstants
 
-class SdkMenuActivity: AppCompatActivity(){
+class SdkMenuActivity : LocalizedAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

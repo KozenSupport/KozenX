@@ -5,6 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/tvLanguage"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/button_outline_selector"
+        android:gravity="center"
+        android:minWidth="76dp"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:text="@string/language_current"
+        android:textColor="#1A237E"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
     <LinearLayout
         android:layout_gravity="center"
         android:orientation="vertical"
@@ -132,7 +149,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="In Progress...."
+            android:text="@string/common_in_progress"
             android:textColor="#FFFFFF"
             android:layout_marginStart="8dp" />
     </LinearLayout>

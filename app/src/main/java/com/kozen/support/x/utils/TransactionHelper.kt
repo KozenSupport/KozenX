@@ -13,6 +13,7 @@ import com.kozen.financial.engine.FinancialEngine
 import com.kozen.financial.util.emv.tlv.BerTag
 import com.kozen.financial.util.emv.tlv.BerTlvBuilder
 import com.kozen.financial.util.emv.tlv.BerTlvParser
+import com.kozen.support.x.R
 import com.kozen.support.x.exception.TransactionException
 import com.kozen.support.x.exception.TransactionExceptionEnum
 import com.kozen.support.x.model.TransactionData
@@ -45,7 +46,7 @@ fun startTransaction(
         EmvCallbackAdapter(transactionData, emvManager, activity, updateProgress, updateResult)
     )
     if (ret != 0) {
-        updateResult(-1, "startTransaction failed: $ret")
+        updateResult(-1, activity.getString(R.string.emv_error_transaction_failed_code, ret))
     }
 }
 

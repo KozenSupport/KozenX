@@ -1,6 +1,5 @@
 package com.kozen.support.x.ui
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +14,7 @@ import com.kozen.support.x.utils.writeKeys
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class PaymentActivity : Activity() {
+class PaymentActivity : LocalizedActivity() {
     private val tag = "PaymentDemo"
 
     private lateinit var tvAmount: TextView
@@ -59,7 +58,10 @@ class PaymentActivity : Activity() {
         findViewById<View>(R.id.btn_cancel).setOnClickListener { onCancelClicked() }
         btnConfirm.setOnClickListener { onConfirmClicked() }
         showMainContent()
-        updateStatus("Initializing Financial SDK...", "You can enter amount while initialization runs.")
+        updateStatus(
+            getString(R.string.payment_status_sdk_initializing),
+            getString(R.string.payment_hint_enter_while_init)
+        )
         btnConfirm.isEnabled = false
     }
 
@@ -69,14 +71,21 @@ class PaymentActivity : Activity() {
             return
         }
 
-        updateStatus("Initializing Financial SDK...", "This will be reused after the first successful init.")
+        updateStatus(
+            getString(R.string.payment_status_sdk_initializing),
+            getString(R.string.payment_hint_reused_after_init)
+        )
         FinancialEngine.init(this) { code, msg ->
             if (code == 0) {
                 ensureDemoKeysLoaded()
             } else {
                 runOnUiThread {
-                    updateStatus("Financial SDK init failed.", msg ?: "Error code: $code")
-                    showDialog("Init Failed", msg ?: "Financial SDK init failed: $code", finishOnOk = true)
+                    updateStatus(getString(R.string.payment_status_sdk_init_failed), msg ?: "Error code: $code")
+                    showDialog(
+                        getString(R.string.payment_dialog_init_failed),
+                        msg ?: "${getString(R.string.payment_status_sdk_init_failed)} $code",
+                        finishOnOk = true
+                    )
                 }
             }
         }
@@ -89,7 +98,10 @@ class PaymentActivity : Activity() {
         }
 
         runOnUiThread {
-            updateStatus("Preparing demo keys...", "This is only done once per app process.")
+            updateStatus(
+                getString(R.string.payment_status_preparing_keys),
+                getString(R.string.payment_hint_keys_once)
+            )
         }
 
         Thread {
@@ -100,8 +112,12 @@ class PaymentActivity : Activity() {
             } catch (e: Exception) {
                 Log.e(tag, "Failed to write demo keys", e)
                 runOnUiThread {
-                    updateStatus("Demo key loading failed.", e.message.orEmpty())
-                    showDialog("Init Failed", e.message ?: "Failed to write demo keys", finishOnOk = true)
+                    updateStatus(getString(R.string.payment_status_key_loading_failed), e.message.orEmpty())
+                    showDialog(
+                        getString(R.string.payment_dialog_init_failed),
+                        e.message ?: getString(R.string.payment_msg_key_loading_failed),
+                        finishOnOk = true
+                    )
                 }
             }
         }.start()
@@ -110,7 +126,10 @@ class PaymentActivity : Activity() {
     private fun markSdkReady() {
         sdkReady = true
         btnConfirm.isEnabled = true
-        updateStatus("Ready", "Enter amount and present card after tapping CONFIRM.")
+        updateStatus(
+            getString(R.string.payment_status_ready),
+            getString(R.string.payment_hint_ready)
+        )
     }
 
     private fun isFinancialSdkReady(): Boolean {
@@ -203,7 +222,7 @@ class PaymentActivity : Activity() {
         if (isProcessing) {
             FinancialEngine.emvManager?.stopTransaction()
             FinancialEngine.cardReaderManager?.powerOff(ConstantCardReader.CardType.MAGNETIC)
-            updateResult(-1, "Canceled by user")
+            updateResult(-1, getString(R.string.payment_error_canceled_by_user))
             return
         }
         resetAmount()
@@ -211,16 +230,25 @@ class PaymentActivity : Activity() {
 
     private fun onConfirmClicked() {
         if (!sdkReady) {
-            showDialog("Please Wait", "Financial SDK is still initializing.")
+            showDialog(
+                getString(R.string.payment_dialog_please_wait),
+                getString(R.string.payment_msg_sdk_initializing)
+            )
             return
         }
         if (isProcessing) {
-            showDialog("Please Wait", "A transaction is already running.")
+            showDialog(
+                getString(R.string.payment_dialog_please_wait),
+                getString(R.string.payment_msg_transaction_running)
+            )
             return
         }
 
         val amountMinorUnits = parseAmountMinorUnits() ?: run {
-            showDialog("Invalid Amount", "Please enter an amount greater than 0.")
+            showDialog(
+                getString(R.string.payment_dialog_invalid_amount),
+                getString(R.string.payment_msg_invalid_amount)
+            )
             return
         }
 
@@ -240,7 +268,7 @@ class PaymentActivity : Activity() {
         try {
             isProcessing = true
             btnConfirm.isEnabled = false
-            showLoading("Please present card...")
+            showLoading(getString(R.string.payment_loading_present_card))
             startTransaction(
                 amountMinorUnits = amountMinorUnits,
                 activity = this,
@@ -249,7 +277,7 @@ class PaymentActivity : Activity() {
             )
         } catch (e: Exception) {
             Log.e(tag, "Transaction failed before EMV start", e)
-            updateResult(-1, e.message ?: "Transaction failed")
+            updateResult(-1, e.message ?: getString(R.string.payment_error_transaction_failed))
         }
     }
 
@@ -261,9 +289,15 @@ class PaymentActivity : Activity() {
             hideLoading()
             resetAmount()
             if (code == 0) {
-                showDialog("Approved", message.orEmpty().ifBlank { "Transaction successful" })
+                showDialog(
+                    getString(R.string.payment_dialog_approved),
+                    message.orEmpty().ifBlank { getString(R.string.payment_msg_success) }
+                )
             } else {
-                showDialog("Declined", message.orEmpty().ifBlank { "Transaction failed" })
+                showDialog(
+                    getString(R.string.payment_dialog_declined),
+                    message.orEmpty().ifBlank { getString(R.string.payment_msg_failed) }
+                )
             }
         }
     }
@@ -279,8 +313,8 @@ class PaymentActivity : Activity() {
     }
 
     private fun showTransactionProgress(message: String) {
-        updateStatus(message, "Transaction is running.")
-        if (message.contains("PIN", ignoreCase = true)) {
+        updateStatus(message, getString(R.string.payment_hint_transaction_running))
+        if (message == getString(R.string.emv_progress_enter_pin) || message.contains("PIN", ignoreCase = true)) {
             hideLoading()
         } else {
             showLoading(message)
@@ -301,7 +335,7 @@ class PaymentActivity : Activity() {
         AlertDialog.Builder(this)
             .setTitle(title)
             .setMessage(message)
-            .setPositiveButton("OK") { dialog, _ ->
+            .setPositiveButton(getString(R.string.common_ok)) { dialog, _ ->
                 dialog.dismiss()
                 if (finishOnOk) finish()
             }

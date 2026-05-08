@@ -1,99 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:orientation="vertical"
-    android:padding="16dp">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="8dp"
-        android:text="Enter PIN"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/tv_pin_display"
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:gravity="center"
-        android:letterSpacing="0.2"
-        android:text=""
-        android:textSize="20sp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout style="@style/PinRow">
-            <Button
-                android:id="@+id/btn_1"
-                style="@style/PinKeyButton"
-                android:text="1" />
-            <Button
-                android:id="@+id/btn_2"
-                style="@style/PinKeyButton"
-                android:text="2" />
-            <Button
-                android:id="@+id/btn_3"
-                style="@style/PinKeyButton"
-                android:text="3" />
-        </LinearLayout>
-
-        <LinearLayout style="@style/PinRow">
-            <Button
-                android:id="@+id/btn_4"
-                style="@style/PinKeyButton"
-                android:text="4" />
-            <Button
-                android:id="@+id/btn_5"
-                style="@style/PinKeyButton"
-                android:text="5" />
-            <Button
-                android:id="@+id/btn_6"
-                style="@style/PinKeyButton"
-                android:text="6" />
-        </LinearLayout>
-
-        <LinearLayout style="@style/PinRow">
-            <Button
-                android:id="@+id/btn_7"
-                style="@style/PinKeyButton"
-                android:text="7" />
-            <Button
-                android:id="@+id/btn_8"
-                style="@style/PinKeyButton"
-                android:text="8" />
-            <Button
-                android:id="@+id/btn_9"
-                style="@style/PinKeyButton"
-                android:text="9" />
-        </LinearLayout>
-
-        <LinearLayout style="@style/PinRow">
-            <Button
-                android:id="@+id/btn_clear"
-                style="@style/PinKeyButton"
-                android:text="C" />
-            <Button
-                android:id="@+id/btn_0"
-                style="@style/PinKeyButton"
-                android:text="0" />
-            <Button
-                android:id="@+id/btn_enter"
-                style="@style/PinKeyButton"
-                android:text="OK" />
-        </LinearLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@android:color/white" android:orientation="vertical" android:padding="16dp">
+  <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center" android:padding="8dp" android:text="@string/pin_title" android:textSize="18sp" android:textStyle="bold" />
+  <TextView android:id="@+id/tv_pin_display" android:layout_width="match_parent" android:layout_height="44dp" android:gravity="center" android:letterSpacing="0.2" android:text="" android:textSize="20sp" />
+  <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+    <LinearLayout style="@style/PinRow">
+      <Button android:id="@+id/btn_1" style="@style/PinKeyButton" android:text="1" />
+      <Button android:id="@+id/btn_2" style="@style/PinKeyButton" android:text="2" />
+      <Button android:id="@+id/btn_3" style="@style/PinKeyButton" android:text="3" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_cancel"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:text="Cancel" />
+    <LinearLayout style="@style/PinRow">
+      <Button android:id="@+id/btn_4" style="@style/PinKeyButton" android:text="4" />
+      <Button android:id="@+id/btn_5" style="@style/PinKeyButton" android:text="5" />
+      <Button android:id="@+id/btn_6" style="@style/PinKeyButton" android:text="6" />
+    </LinearLayout>
+    <LinearLayout style="@style/PinRow">
+      <Button android:id="@+id/btn_7" style="@style/PinKeyButton" android:text="7" />
+      <Button android:id="@+id/btn_8" style="@style/PinKeyButton" android:text="8" />
+      <Button android:id="@+id/btn_9" style="@style/PinKeyButton" android:text="9" />
+    </LinearLayout>
+    <LinearLayout style="@style/PinRow">
+      <Button android:id="@+id/btn_clear" style="@style/PinKeyButton" android:text="C" />
+      <Button android:id="@+id/btn_0" style="@style/PinKeyButton" android:text="0" />
+      <Button android:id="@+id/btn_enter" style="@style/PinKeyButton" android:text="OK" />
+    </LinearLayout>
+  </LinearLayout>
+  <Button android:id="@+id/btn_cancel" android:layout_width="match_parent" android:layout_height="48dp" android:layout_marginTop="8dp" android:text="@string/common_cancel" />
 </LinearLayout>

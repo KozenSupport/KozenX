@@ -7,7 +7,6 @@ import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kozen.support.x.R
@@ -17,7 +16,7 @@ import com.kozen.support.x.utils.CommonTools
 import com.kozen.support.x.utils.SdkManager
 
 
-class ApiListActivity : AppCompatActivity() {
+class ApiListActivity : LocalizedAppCompatActivity() {
 
     private lateinit var apiAdapter: ApiAdapter
 
@@ -32,7 +31,8 @@ class ApiListActivity : AppCompatActivity() {
 
         setContentView(R.layout.api_list_activity)
 
-        findViewById<TextView>(R.id.tvSdkVersion).text = "SDK Version: ${SdkManager.getSdkVersion()}"
+        findViewById<TextView>(R.id.tvSdkVersion).text =
+            getString(R.string.api_sdk_version, SdkManager.getSdkVersion())
 
         findViewById<Button>(R.id.btnHowToIntegrate).setOnClickListener {
             CommonTools.showHowToIntegrate(sdkType,this)

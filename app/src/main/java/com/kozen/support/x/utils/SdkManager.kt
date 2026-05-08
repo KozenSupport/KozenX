@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.custom.mdm.CustomAPI
 import com.kozen.component_client.ComponentEngine
 import com.kozen.financial.engine.FinancialEngine
+import com.kozen.support.x.R
 import com.kozen.support.x.config.SdkTypeConstants
 import com.kozen.terminalmanager.TerminalManager
 import java.lang.reflect.Method
@@ -24,7 +25,11 @@ object SdkManager {
     fun init(context: Context, sdkType: String?) {
         try {
             if(sdkType == null || sdkType == ""){
-                CommonTools.showMethodDialog(context,"Error!","Please check SDK type config!")
+                CommonTools.showMethodDialog(
+                    context,
+                    context.getString(R.string.common_error),
+                    context.getString(R.string.sdk_type_config_error)
+                )
                 return
             }
             SDK_TYPE = sdkType;
@@ -117,7 +122,11 @@ object SdkManager {
 
     fun initSKD(context : Context, sdkType : String){
         if(sdkType == ""){
-            CommonTools.showMethodDialog(context,"Error!","Please check SDK type config!")
+            CommonTools.showMethodDialog(
+                context,
+                context.getString(R.string.common_error),
+                context.getString(R.string.sdk_type_config_error)
+            )
             return
         }
         when(sdkType){
@@ -125,13 +134,21 @@ object SdkManager {
             SdkTypeConstants.COMPONENT -> initComponentSDK(context)
             SdkTypeConstants.TERMINAL -> initTerminalSDK(context)
             SdkTypeConstants.FINANCIAL -> initFinancialSDK(context)
-            else -> CommonTools.showMethodDialog(context,"Error","No SdkType Info!")
+            else -> CommonTools.showMethodDialog(
+                context,
+                context.getString(R.string.common_error),
+                context.getString(R.string.sdk_type_missing)
+            )
         }
     }
 
     fun releaseSDK(context : Context, sdkType : String?){
         if(sdkType == null || sdkType == ""){
-            CommonTools.showMethodDialog(context,"Error!","Please check SDK type config!")
+            CommonTools.showMethodDialog(
+                context,
+                context.getString(R.string.common_error),
+                context.getString(R.string.sdk_type_config_error)
+            )
             return
         }
         when(sdkType){
@@ -139,7 +156,11 @@ object SdkManager {
             SdkTypeConstants.COMPONENT -> releaseComponent()
             SdkTypeConstants.TERMINAL -> releaseTerminal()
             SdkTypeConstants.FINANCIAL -> releaseFinancial()
-            else -> CommonTools.showMethodDialog(context,"Error","No SdkType Info!")
+            else -> CommonTools.showMethodDialog(
+                context,
+                context.getString(R.string.common_error),
+                context.getString(R.string.sdk_type_missing)
+            )
         }
         Log.i(LOG_TAG,"released : $SDK_TYPE")
     }
@@ -152,9 +173,9 @@ object SdkManager {
             val message = if(code == 0){
                 ComponentEngine.keyboardManager?.let { managerMap.put("com.kozen.component.keyboard.IKeyboard",it) }
                 ComponentEngine.secondaryScreenManager?.let { managerMap.put("com.kozen.component.secondaryScreen.ISecondaryScreen",it) }
-                "Init ComponentSDK Success!"
+                context.getString(R.string.sdk_init_component_success)
             }else{
-                "Init ComponentSDK Failed! $msg"
+                context.getString(R.string.sdk_init_component_failed, msg.orEmpty())
             }
             Log.i(LOG_TAG,message)
             Toast.makeText(context,message, Toast.LENGTH_SHORT).show()
@@ -174,9 +195,9 @@ object SdkManager {
                 TerminalManager.perceptionInfoManager?.let { managerMap.put("com.kozen.terminalmanager.perceptioninfo.IPerceptionInfoManager",it) }
                 TerminalManager.resourceManager?.let { managerMap.put("com.kozen.terminalmanager.resource.IResourceManager",it) }
 
-                "Init TerminalSDK Success!"
+                context.getString(R.string.sdk_init_terminal_success)
             }else{
-                "Init TerminalSDK Failed! $msg"
+                context.getString(R.string.sdk_init_terminal_failed, msg.orEmpty())
             }
             Log.i(LOG_TAG,message)
             Toast.makeText(context,message, Toast.LENGTH_SHORT).show()
@@ -195,9 +216,9 @@ object SdkManager {
                 FinancialEngine.pinpadManager?.let { managerMap.put("com.kozen.financial.pinpad.IPinpadManager",it) }
                 FinancialEngine.scannerManager?.let { managerMap.put("com.kozen.financial.scanner.IScannerManager",it) }
                 FinancialEngine.securityManager?.let { managerMap.put("com.kozen.financial.security.ISecurityManager",it) }
-                "Init FinancialSDK Success!"
+                context.getString(R.string.sdk_init_financial_success)
             }else{
-                "Init FinancialSDK Failed! $msg"
+                context.getString(R.string.sdk_init_financial_failed, msg.orEmpty())
             }
             Log.i(LOG_TAG,message)
             Toast.makeText(context,message, Toast.LENGTH_SHORT).show()

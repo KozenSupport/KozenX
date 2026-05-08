@@ -11,9 +11,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.kozen.support.x.R
-import androidx.appcompat.app.AppCompatActivity
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity : LocalizedAppCompatActivity() {
 
     private lateinit var etRegisterUsername: EditText
     private lateinit var etRegisterPassword: EditText
@@ -85,7 +84,7 @@ class RegisterActivity : AppCompatActivity() {
         // 验证输入
         if (validateInput(username, password, confirmPassword)) {
             // 显示加载对话框
-            showProgressDialog("In progress ...")
+            showProgressDialog(getString(R.string.register_progress))
 
             // 模拟网络请求延迟
             Handler(Looper.getMainLooper()).postDelayed({
