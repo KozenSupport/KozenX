@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.widget.Button
 import com.kozen.support.x.R
 import com.kozen.support.x.config.SdkTypeConstants
+import com.kozen.support.x.unittest.PrintReceiptUnitTest
+import com.kozen.support.x.unittest.UnitTestRunner
 
 class SdkMenuActivity : LocalizedAppCompatActivity() {
 
@@ -16,6 +18,7 @@ class SdkMenuActivity : LocalizedAppCompatActivity() {
         val btnComponentSDK: Button = findViewById(R.id.btnComponentManager)
         val btnFinancialSDK: Button = findViewById(R.id.btnFinancialManager)
         val btnPaymentDemo: Button = findViewById(R.id.btnPaymentDemo)
+        val btnUnitTest: Button = findViewById(R.id.btnUnitTest)
         val btnCustomerApiManager: Button = findViewById(R.id.btnCustomerApiManager)
 
         btnTerminalManagerSDK.setOnClickListener {
@@ -38,6 +41,15 @@ class SdkMenuActivity : LocalizedAppCompatActivity() {
 
         btnPaymentDemo.setOnClickListener {
             startActivity(Intent(this, PaymentActivity::class.java))
+        }
+
+        btnUnitTest.setOnClickListener {
+            UnitTestRunner.run(
+                this,
+                listOf(
+                    PrintReceiptUnitTest
+                )
+            )
         }
 
         btnCustomerApiManager.setOnClickListener {
