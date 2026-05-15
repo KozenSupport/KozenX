@@ -59,7 +59,11 @@ object UnitTestRunner {
 
             val test = tests[index]
             showProgress(test.runningMessage(activity))
-            test.start(activity, object : UnitTestCallback {
+            val startBlock = {
+                if (!test.keepDialogVisibleDuringRun) {
+                    dialog?.dismiss()
+                }
+                test.start(activity, object : UnitTestCallback {
                 override fun onSuccess() {
                     mainHandler.post {
                         if (!isActivityAlive()) {
@@ -82,7 +86,14 @@ object UnitTestRunner {
                         showComplete(activity.getString(R.string.unit_test_failed, message))
                     }
                 }
-            })
+                })
+            }
+
+            if (test.keepDialogVisibleDuringRun) {
+                startBlock()
+            } else {
+                mainHandler.postDelayed(startBlock, SUCCESS_HOLD_MS)
+            }
         }
 
         private fun showProgress(message: String) {

@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.widget.Button
 import com.kozen.support.x.R
 import com.kozen.support.x.config.SdkTypeConstants
+import com.kozen.support.x.unittest.OnlinePinUnitTest
 import com.kozen.support.x.unittest.PrintReceiptUnitTest
+import com.kozen.support.x.unittest.SecurityCryptoUnitTest
 import com.kozen.support.x.unittest.UnitTestRunner
 
 class SdkMenuActivity : LocalizedAppCompatActivity() {
@@ -47,7 +49,10 @@ class SdkMenuActivity : LocalizedAppCompatActivity() {
             UnitTestRunner.run(
                 this,
                 listOf(
-                    PrintReceiptUnitTest
+                    PrintReceiptUnitTest,
+                    SecurityCryptoUnitTest,
+                    OnlinePinUnitTest.Tpk,
+                    OnlinePinUnitTest.Dukpt
                 )
             )
         }

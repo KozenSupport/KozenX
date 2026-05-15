@@ -3,6 +3,9 @@ package com.kozen.support.x.unittest
 import android.content.Context
 
 interface UnitTestCase {
+    val keepDialogVisibleDuringRun: Boolean
+        get() = true
+
     fun runningMessage(context: Context): String
     fun successMessage(context: Context): String
     fun start(context: Context, callback: UnitTestCallback)

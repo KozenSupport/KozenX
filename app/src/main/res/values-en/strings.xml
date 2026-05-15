@@ -45,6 +45,18 @@
     <string name="unit_test_print_failed_start">Printer test failed: %1$s</string>
     <string name="unit_test_print_failed_exception">Printer test exception: %1$s</string>
     <string name="unit_test_print_failed_unknown">Printer test failed.</string>
+    <string name="unit_test_financial_init_failed">Financial SDK init failed: %1$s</string>
+    <string name="unit_test_security_running">Testing key injection, KCV verification, encryption/decryption, and MAC. Please wait.</string>
+    <string name="unit_test_security_success">Key and crypto tests succeeded.</string>
+    <string name="unit_test_security_manager_missing">Security manager is not ready.</string>
+    <string name="unit_test_security_failed_exception">Security test exception: %1$s</string>
+    <string name="unit_test_pin_tpk_running">Testing TPK online PIN pad. Please enter PIN.</string>
+    <string name="unit_test_pin_tpk_success">TPK online PIN pad test succeeded.</string>
+    <string name="unit_test_pin_dukpt_running">Testing DUKPT online PIN pad. Please enter PIN.</string>
+    <string name="unit_test_pin_dukpt_success">DUKPT online PIN pad test succeeded.</string>
+    <string name="unit_test_pin_manager_missing">PIN pad manager is not ready.</string>
+    <string name="unit_test_pin_empty_block">PIN pad did not return a PIN block.</string>
+    <string name="unit_test_pin_failed">PIN pad test failed: verifyResult=%1$d, try=%2$d</string>
 
     <string name="register_title">Register</string>
     <string name="register_username_hint">Email Address</string>

@@ -1,5 +1,6 @@
 package com.kozen.support.x.unittest
 
+import android.annotation.SuppressLint
 import android.content.Context
 import com.kozen.financial.aidl.printer.BarcodePrintLine
 import com.kozen.financial.aidl.printer.TextPrintLine
@@ -8,6 +9,7 @@ import com.kozen.financial.engine.FinancialEngine
 import com.kozen.financial.printer.IPrintResultCallback
 import com.kozen.financial.printer.IPrinterManager
 import com.kozen.support.x.R
+import com.kozen.support.x.utils.FinancialSdkErrorTranslator
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -47,12 +49,16 @@ object PrintReceiptUnitTest : UnitTestCase {
                 fail(
                     appContext,
                     callback,
-                    appContext.getString(R.string.unit_test_print_failed_init, msg ?: code.toString())
+                    appContext.getString(
+                        R.string.unit_test_print_failed_init,
+                        msg ?: FinancialSdkErrorTranslator.describe(appContext, code)
+                    )
                 )
             }
         }
     }
 
+    @SuppressLint("StringFormatMatches")
     private fun printReceipt(context: Context, callback: UnitTestCallback) {
         Thread {
             val printer = FinancialEngine.printerManager
@@ -64,7 +70,14 @@ object PrintReceiptUnitTest : UnitTestCase {
             try {
                 val openResult = printer.open()
                 if (openResult != SUCCESS) {
-                    fail(context, callback, context.getString(R.string.unit_test_print_failed_open, openResult))
+                    fail(
+                        context,
+                        callback,
+                        context.getString(
+                            R.string.unit_test_print_failed_start,
+                            FinancialSdkErrorTranslator.formatFailure(context, "open printer", openResult)
+                        )
+                    )
                     return@Thread
                 }
 
@@ -87,7 +100,8 @@ object PrintReceiptUnitTest : UnitTestCase {
                             callback,
                             context.getString(
                                 R.string.unit_test_print_failed_start,
-                                "$error ${msg.orEmpty()}".trim()
+                                msg?.takeIf { it.isNotBlank() }
+                                    ?: FinancialSdkErrorTranslator.describe(context, error)
                             )
                         )
                     }
@@ -95,7 +109,14 @@ object PrintReceiptUnitTest : UnitTestCase {
 
                 if (startResult != SUCCESS) {
                     printer.close()
-                    fail(context, callback, context.getString(R.string.unit_test_print_failed_start, startResult))
+                    fail(
+                        context,
+                        callback,
+                        context.getString(
+                            R.string.unit_test_print_failed_start,
+                            FinancialSdkErrorTranslator.formatFailure(context, "start print", startResult)
+                        )
+                    )
                 }
             } catch (e: Exception) {
                 runCatching { printer.close() }
